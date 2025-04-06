@@ -7,6 +7,11 @@
         --black: rgb(43, 42, 42);
         --red: rgb(228, 32, 43);
     };
+
+    body {
+        background-color: var(--black) !important;
+        color: var(--yellow) !important;
+    }
     
     .bg-yellow {
         background-color: var(--yellow) !important;
@@ -25,7 +30,7 @@
     }
     
     .text-black {
-        color: var(--black);
+        color: var(--black) !important;
     }
     
     .text-red {
@@ -33,12 +38,12 @@
     }
     
     .nav-link {
-        color: var(--yellow) !important;
-        font-weight: 700;
+        color: var(--yellow);
+        font-weight: 700 !important;
     }
 
     .nav-link:hover {
-        color: white !important;
+        color: green !important;
     }
 
     .logo {
@@ -46,8 +51,8 @@
     }
 
     .navbar {
-        height: 70px;
-        transition: 0.5s;
+        height: 70px !important;
+        transition: 0.5s !important;
     }
 
     .header {
@@ -72,4 +77,52 @@
         color: var(--black);
         background-color: var(--yellow);
         transform: scale(1.1);
+    }
+
+    .positioned {
+        position: relative;
+        top: -150px;
+    }
+    
+    .col-custom {
+        padding: 10px !important;
+        border: 2px solid var(--black) !important;
+        cursor: pointer !important;
+        transition: 0.5s !important;
+        color: var(--black) !important;
+    }
+
+    .col-custom:hover {
+        transform: scale(1.1) !important;
+        background-color: var(--black) !important;
+        color: var(--red) !important;
+        border: 2px solid var(--red) !important;
+    }
+
+    .number {
+        font-size: 50px;
+        font-weight: 900;
+    }
+
+    .swiper {
+        height: 600px;
+    }
+
+    .card-review {
+        height: 250px;
+        width: 500px;
+        border: 2px solid var(--yellow);
+        border-radius: 20px;
+    }
+
+    .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media screen and (max-widht: 600px) {
+        .positioned {
+            position: static;
+        }
     }

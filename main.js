@@ -25,7 +25,7 @@ window.addEventListener('scroll', () => {
         links.forEach((link) => {
             link.style.color = "var(--black)";
         });
-        logoNavbar.src = '';
+        logoNavbar.src = './media/immagine.jpeg';
     } else {
         nabvar.classList.add('bg-black');
         nabvar.classList.remove('bg-yellow');
@@ -35,7 +35,7 @@ window.addEventListener('scroll', () => {
         links.forEach((link) => {
             link.style.color = `var(--yellow)`;
         });
-        logoNavbar.src = '';
+        logoNavbar.src = './media/immagine.jpeg';
     }
 });
 

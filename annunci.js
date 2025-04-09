@@ -1,3 +1,35 @@
+let nabvar = document.querySelector('#navbar');
+let links = document.querySelectorAll('.nav-link');
+let logoNavbar = document.querySelector('#logoNavbar');
+let collapse = document.querySelector('#collapse');
+
+window.addEventListener('scroll', () => {
+    let scrolled = window.scrollY;
+    if (scrolled > 0) {
+        nabvar.classList.remove('bg-black');
+        nabvar.style.backgroundColor = `var(--yellow)`;
+        collapse.classList.remove('bg-black');
+        collapse.style.backgroundColor = `var(--yellow)`;
+        nabvar.style.height = '140px';
+        links.forEach((link) => {
+            link.style.color = "var(--black)";
+        });
+        logoNavbar.src = './media/immagine.jpeg';
+    } else {
+        nabvar.classList.add('bg-black');
+        nabvar.classList.remove('bg-yellow');
+        collapse.classList.add('bg-black');
+        collapse.classList.remove('bg-yellow');
+        nabvar.style.height = '70px';
+        links.forEach((link) => {
+            link.style.color = `var(--yellow)`;
+        });
+        logoNavbar.src = './media/immagine.jpeg';
+    }
+});
+
+
+
 fetch('./annunci.json')
 .then((response) => response.json())
 .then((data) => {
@@ -5,6 +37,8 @@ fetch('./annunci.json')
     let radioWrapper = document.querySelector('#radioWrapper');
     let cardWrapper = document.querySelector('#cardWrapper');
     let priceValue = document.querySelector('#priceValue');
+    let wordInput = document.querySelector('#wordInput');
+    let priceInput = document.querySelector('#priceInput');
     
     function radioCreate() {
         let categories = data.map((annuncio) => annuncio.category);
@@ -55,45 +89,61 @@ fetch('./annunci.json')
     }
     
     showCards(data)
-
-    function filterByCategory(category) {
+    
+    let radioButtons = document.querySelectorAll('.form-check-input');
+    function filterByCategory(array) {
+        let category = Array.from(radioButtons).find((radioButton) => radioButton.checked).id;
         if (category != 'allCategories') {
-        let filtered = data.filter((annuncio) => annuncio.category == category);
-        showCards(filtered);
+            let filtered = array.filter((annuncio) => annuncio.category == category);
+            return filtered;
         }
         else{
-            showCards(data);
+            return array;
         }
     }
-
-    let radioButtons = document.querySelectorAll('.form-check-input');
-
+    
+    
     radioButtons.forEach((radioButton) => {
         radioButton.addEventListener('click', () => {
-            filterByCategory(radioButton.id)
+            globalFilter();
+            setPriceInput();
         });
     });
-
+    
     function setPriceInput() {
-        let priceInput = document.querySelector('#priceInput')
-        let prices = data.map((annuncio) => +annuncio.price);
+        let prices = filterByCategory(data).map((annuncio) => +annuncio.price);
         prices.sort((a, b) => a - b);
         let maxPrice = Math.ceil(prices.pop());
         priceInput.max = maxPrice;
         priceInput.value = maxPrice;
         priceValue.innerHTML = maxPrice;
     }
-
+    
     setPriceInput()
-
-    function filterByPrice() {
-        let filtered = data.filter((annuncio) => annuncio.price <= priceInput.value);
-        showCards(filtered)
+    
+    function filterByPrice(array) {
+        let filtered = array.filter((annuncio) => +annuncio.price <= priceInput.value);
+        return filtered;
     }
-
+    
     priceInput.addEventListener('input', () => {
         priceValue.innerHTML = priceInput.value;
-        filterByPrice();
+        globalFilter();
     });
-
+    
+    function filterByWord(array) {
+        let filtered = array.filter((annuncio) => annuncio.name.toLowerCase().includes(wordInput.value.toLowerCase()));
+        return filtered;
+    }
+    
+    wordInput.addEventListener('input', () => {
+        globalFilter();
+    });
+    
+    function globalFilter() {
+        let filteredByCategory = filterByCategory(data);
+        let filteredByPrice = filterByPrice(filteredByCategory);
+        let filteredByWord = filterByWord(filteredByPrice);
+        showCards(filteredByWord);
+    }
 });

@@ -126,3 +126,10 @@ let swiper = new Swiper('.swiper', {
         prevEl: '.swiper-button-prev',
     },
 });
+
+[...document.querySelectorAll('*')].forEach(el => {
+  if (el.offsetWidth > document.documentElement.clientWidth) {
+    console.log('Elemento troppo largo:', el);
+  }
+});
+

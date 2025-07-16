@@ -47,7 +47,7 @@ opener.addEventListener('click', () => {
         opener.style.transform = 'rotate(45deg)';
         movedDivs.forEach((movedDiv, i) => {
             let angle = (360 * i) / movedDivs.length;
-            movedDiv.style.transform = `rotate(${angle}deg) translate(150px) rotate(-${angle}deg)`;
+            movedDiv.style.transform = `rotate(${angle}deg) translate(130px) rotate(-${angle}deg)`;
         });
         check = true;
     } else {
